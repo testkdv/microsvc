@@ -431,7 +431,7 @@ func (srv *srvType) Ioflow(rw http.ResponseWriter, r *http.Request) {
 func main() {
 
 	port := flag.String("port", ":6767", "port HTTP")
-	dsn := flag.String("dsn", "root:Uhbv4862!@/mydb?charset=utf8&parseTime=true", "DSN MySQL ")
+	dsn := flag.String("dsn", "user:1234@/mydb?charset=utf8&parseTime=true", "DSN MySQL ")
 	flag.Parse()
 	db, err := sql.Open("mysql", *dsn)
 	if err != nil {
