@@ -25,5 +25,6 @@ Methods: POST
 application/json
 {"senderid": string[36], "id": string[36], "amount": number}
 
-
+## Запуск
+microsvc -port ":6060" -dsn "user:1234@/mydb?charset=utf8&parseTime=true"
 
