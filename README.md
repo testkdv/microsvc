@@ -26,7 +26,7 @@ application/json
 {"senderid": string[36], "id": string[36], "amount": number}
 
 
-Все методы возвращают json c новым балансом счета/счетов : {"id": string[36], "amount": number}
+Все методы возвращают json c новым балансом счета/счетов : {"id": string[36], "balance": number}
 
 ## Пример запуска
 microsvc -port ":6060" -dsn "user:1234@/mydb?charset=utf8&parseTime=true"
