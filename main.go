@@ -298,7 +298,7 @@ func (srv *srvType) Tekst(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//rw.Header().Set("Content-type", "application/json; charset=utf-8")
-	rw.Write([]byte("Server started"))
+	rw.Write([]byte("Server started " + time.Now().Format("01-02-2006 15:04:05")))
 }
 
 // Обработка запроса баланса
@@ -453,7 +453,7 @@ func main() {
 	mux.HandleFunc("/inflow", env.Ioflow)
 	mux.HandleFunc("/outflow", env.Ioflow)
 	mux.HandleFunc("/transfer", env.Transfer)
-	log.Printf("Server started at %s", *port)
+	log.Printf("Server started at %s %s", *port, time.Now().Format("01-02-2006 15:04:05"))
 	er := http.ListenAndServe(*port, mux)
 	log.Fatal("ListenAndServe:", er)
 
