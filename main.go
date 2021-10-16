@@ -217,12 +217,12 @@ func (s dbType) AddTransfer(qu TypeTransfer) ([]BlAnswer, error) {
 		err1 := errors.New("user not found")
 		return buAnsw, err1
 	}
-	newBalanceSender = float64(int(answ[0].Balance/100)-int(qu.Amount*100)) / 100
+	newBalanceSender = float64(int(answ[0].Balance*100)-int(qu.Amount*100)) / 100
 	if newBalanceSender < 0 {
 		err1 := errors.New("the balance of the sender cannot be negative")
 		return buAnsw, err1
 	}
-	newBalance = float64(int(answ[0].Balance/100)+int(qu.Amount*100)) / 100
+	newBalance = float64(int(answ[0].Balance*100)+int(qu.Amount*100)) / 100
 
 	str2 := "INSERT transaction(user_id,transaction_date,transaction_type,amount,description) VALUES (?,?,?,?,?)"
 	str1 := "UPDATE users SET balance = ? WHERE user_id = ?"
