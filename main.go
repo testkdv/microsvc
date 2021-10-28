@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/Go-SQL-Driver/MySQL"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 // тип для пользователя
