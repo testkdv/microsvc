@@ -36,7 +36,7 @@ func vrfJSON(dst interface{}) error {
 
 		if tN == "Amount" {
 
-			if v.Field(i).Float() < 0 {
+			if v.Field(i).Float() <= 0 {
 				msg := fmt.Sprintf("field %s < 0", tN)
 				return &malformedRequest{status: http.StatusBadRequest, msg: msg}
 			}

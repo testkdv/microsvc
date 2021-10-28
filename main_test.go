@@ -22,7 +22,33 @@ func (a AnyTime) Match(v driver.Value) bool {
 	return ok
 }
 
-func TestInFlow(t *testing.T) {
+func TestBalanceFun(t *testing.T) {
+	id := "t1"
+	tBalance := 300.00
+
+	db, mock, err := sqlmock.New()
+
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+	defer db.Close()
+
+	//баланс вернется в []unit8
+	tBalanceArray := []byte(fmt.Sprintf("%.2f", tBalance))
+
+	rows := sqlmock.NewRows([]string{"user_id", "balance"}).AddRow(id, tBalanceArray)
+	mock.ExpectPrepare("select user_id,balance from users").ExpectQuery().WithArgs(id).WillReturnRows(rows)
+	sq := &dbType{DB: db}
+	answ, err := sq.BalanceFun(id)
+	if err != nil {
+		t.Errorf("Error  %s", err.Error())
+	}
+	if answ.Balance != tBalance {
+		t.Errorf("balance =%f, want %f", answ.Balance, tBalance)
+	}
+}
+
+func TestIoflow(t *testing.T) {
 	// Тестовые данные : уже созданный пользователю t1 с балансом 300 посылаем 700
 	tBalance := 300.00
 	tData := Activity{Id: "t1", Amount: 700}
@@ -59,11 +85,11 @@ func TestInFlow(t *testing.T) {
 
 	r := http.NewServeMux()
 	r.HandleFunc("/inflow", envTest.Ioflow)
-	srv := httptest.NewServer(r)
+	vsrv := httptest.NewServer(r)
 
-	defer srv.Close()
+	defer vsrv.Close()
 
-	resp, err := http.Post(fmt.Sprintf("%s/inflow", srv.URL), "application/json",
+	resp, err := http.Post(fmt.Sprintf("%s/inflow", vsrv.URL), "application/json",
 		bytes.NewBuffer(json_data))
 
 	if err != nil {
